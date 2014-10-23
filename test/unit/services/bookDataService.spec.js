@@ -20,6 +20,10 @@ describe('Service: bookDataService', function() {
     it('should contain a getBookByIsbn() API function', function() {
       expect(angular.isFunction(bookDataService.getBookByIsbn)).toBe(true);
     });
+
+    it('should contain a saveBook() API function', function() {
+      expect(angular.isFunction(bookDataService.saveBook)).toBe(true);
+    });
   });
 
   describe('getBooks()', function() {
@@ -59,6 +63,32 @@ describe('Service: bookDataService', function() {
 
       expect(isBookObject(book)).toBe(true);
       expect(book.isbn).toBe(isbn);
+    });
+  });
+
+  describe('saveBook(book)', function() {
+    it('should properly store a new book object', function() {
+      var bookToStore = {
+        isbn: 'test'
+      };
+
+      var bookSaved = false;
+
+      bookDataService.saveBook(bookToStore).then(function(response) {
+        bookSaved = response.data;
+      });
+
+      $rootScope.$apply();
+
+      var book;
+      bookDataService.getBookByIsbn(bookToStore.isbn).then(function(response) {
+        book = response.data;
+      });
+
+      $rootScope.$apply();
+
+      expect(bookSaved).toBe(true);
+      expect(book.isbn).toBe(bookToStore.isbn);
     });
   });
 
