@@ -1,3 +1,3 @@
 "use strict";
 
-angular.module('dpunktApp', []);
+angular.module('dpunktApp', ['ngRoute']);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="dpunktApp">
 <head>
   <meta charset="utf-8">
   <title>myApp</title>
@@ -7,15 +7,9 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="styles/main.css">
 </head>
-<body ng-app="dpunktApp">
+<body>
 
-  <div class="container" ng-controller="colorPickerCtrl">
-
-      <color-picker on-change="onColorChange(r, g, b)" on-blur="onSliderBlur()">
-      </color-picker>
-
-  </div>
-
+    <div ng-view></div>
 
   <!-- 3rd-Party Libs -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -23,9 +17,11 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
 
   <!-- Application Files -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/colorPickerCtrl.js"></script>
-    <script src="scripts/directives/colorPicker.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/colorPickerCtrl.js"></script>
+  <script src="scripts/controllers/bookListCtrl.js"></script>
+  <script src="scripts/directives/colorPicker.js"></script>
+  <script src="scripts/_configs/routeConfig.js"></script>
 
 </body>
 </html>
