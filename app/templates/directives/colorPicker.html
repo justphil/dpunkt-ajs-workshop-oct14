@@ -1,5 +1,5 @@
-<input type="range" min="0" max="255" ng-model="r" /><br>
-<input type="range" min="0" max="255" ng-model="g" /><br>
-<input type="range" min="0" max="255" ng-model="b" /><br>
+<input ng-blur="onBlur()" type="range" min="0" max="255" ng-model="r" /><br>
+<input ng-blur="onBlur()" type="range" min="0" max="255" ng-model="g" /><br>
+<input ng-blur="onBlur()" type="range" min="0" max="255" ng-model="b" /><br>
 
 <div style="width: 100%; height: 50px; background-color: rgb({{r}},{{g}},{{b}})"></div>

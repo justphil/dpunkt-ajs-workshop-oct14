@@ -20,9 +20,7 @@ angular.module('dpunktApp').directive('colorPicker', function() {
         });
       });
 
-      element.find('input').blur(function() {
-        scope.onBlur();
-      });
+
     }
   };
 
