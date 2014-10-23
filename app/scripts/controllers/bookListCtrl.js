@@ -1,27 +1,9 @@
-angular.module('dpunktApp').controller('bookListCtrl', function($scope) {
+angular.module('dpunktApp').controller('bookListCtrl', function($scope, bookDataService) {
 
-  $scope.books = [
-    {
-      title: 'AngularJS',
-      subtitle: 'Eine Einführung in das JS-Framework',
-      author: 'pt, rb',
-      isbn: '123-456-789',
-      numPages: 360
-    },
-    {
-      title: 'JavaScript Effektiv',
-      subtitle: 'Effektives JS',
-      author: 'foo',
-      isbn: '111-222-333',
-      numPages: 250
-    },
-    {
-      title: 'TypeScript',
-      subtitle: 'Ein netter Versuch von Microsoft',
-      author: 'bar',
-      isbn: '222-222-222',
-      numPages: 400
-    }
-  ];
+  bookDataService.getBooks().then(function(response) {
+    $scope.books = response.data;
+  }).catch(function(error) {
+    console.log('An error occurred!', error);
+  });
 
 });
