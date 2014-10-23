@@ -6,10 +6,24 @@ angular.module('dpunktApp').directive('colorPicker', function() {
     templateUrl: 'templates/directives/colorPicker.html',
     scope: {
       // controlled connections
-      r: '@initR',
-      g: '@initG',
-      b: '@initB'
-    } // isolated scope
+      onChange: '&',
+      onBlur: '&'
+    }, // isolated scope
+    link: function(scope, element) {
+      ['r', 'g', 'b'].forEach(function(c) {
+        scope.$watch(c, function() {
+          scope.onChange({
+            r: scope.r,
+            g: scope.g,
+            b: scope.b
+          });
+        });
+      });
+
+      element.find('input').blur(function() {
+        scope.onBlur();
+      });
+    }
   };
 
 });

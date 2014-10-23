@@ -8,8 +8,11 @@
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body ng-app="dpunktApp">
-  <div class="container">
-      <color-picker init-r="0" init-g="0" init-b="0"></color-picker>
+
+  <div class="container" ng-controller="colorPickerCtrl">
+
+      <color-picker on-change="onColorChange(r, g, b)" on-blur="onSliderBlur()">
+      </color-picker>
 
   </div>
 
@@ -21,6 +24,7 @@
 
   <!-- Application Files -->
     <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/colorPickerCtrl.js"></script>
     <script src="scripts/directives/colorPicker.js"></script>
 
 </body>
