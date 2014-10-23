@@ -13,7 +13,7 @@
 
     <tbody>
         <tr ng-repeat="book in books | orderBy:'title':true | filter:{title: searchText}">
-            <td ng-bind="book.title"></td>
+            <td><a href="#/books/details" ng-bind="book.title"></a></td>
             <td ng-bind="book.subtitle"></td>
             <td ng-bind="book.isbn"></td>
         </tr>
