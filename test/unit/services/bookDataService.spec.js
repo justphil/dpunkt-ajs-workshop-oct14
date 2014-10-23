@@ -16,6 +16,10 @@ describe('Service: bookDataService', function() {
     it('should contain a getBooks() API function', function() {
       expect(angular.isFunction(bookDataService.getBooks)).toBe(true);
     });
+
+    it('should contain a getBookByIsbn() API function', function() {
+      expect(angular.isFunction(bookDataService.getBookByIsbn)).toBe(true);
+    });
   });
 
   describe('getBooks()', function() {
@@ -38,6 +42,23 @@ describe('Service: bookDataService', function() {
       books.forEach(function(b) {
         expect(isBookObject(b)).toBe(true);
       });
+    });
+  });
+
+  describe('getBookByIsbn(isbn)', function() {
+    it('should return an appropriate book object by isbn', function() {
+      var book;
+      var isbn = '123-456-789';
+
+      bookDataService.getBookByIsbn(isbn).then(function(response) {
+        book = response.data;
+      });
+
+      // synchronous resolution of pending promises
+      $rootScope.$apply();
+
+      expect(isBookObject(book)).toBe(true);
+      expect(book.isbn).toBe(isbn);
     });
   });
 

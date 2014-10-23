@@ -31,9 +31,26 @@ angular.module('dpunktApp').factory('bookDataService', function($q) {
     });
   }
 
+  function getBookByIsbn(isbn) {
+    var book = null;
+
+    var tmpArray = books.filter(function(b) {
+      return isbn === b.isbn;
+    });
+
+    if (tmpArray.length > 0) {
+      book = angular.copy(tmpArray[0]);
+    }
+
+    return $q.when({
+      data: book
+    });
+  }
+
   // revealing module
   return {
-    getBooks: getBooks
+    getBooks: getBooks,
+    getBookByIsbn: getBookByIsbn
   };
 
 });

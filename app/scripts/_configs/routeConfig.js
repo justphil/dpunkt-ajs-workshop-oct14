@@ -1,10 +1,12 @@
 angular.module('dpunktApp').config(function($routeProvider) {
-  $routeProvider.when('/', {
+  $routeProvider.when('/books', {
     templateUrl: 'templates/routes/bookList.html',
     controller: 'bookListCtrl'
-  }).when('/books/details', {
+  }).when('/books/:isbn', {
     templateUrl: 'templates/routes/bookDetails.html',
     controller: 'bookDetailsCtrl'
+  }).otherwise({
+    redirectTo: '/books'
   });
 
 });

@@ -1,11 +1,11 @@
-angular.module('dpunktApp').controller('bookDetailsCtrl', function($scope) {
+angular.module('dpunktApp').controller('bookDetailsCtrl', function($scope, $routeParams, bookDataService) {
 
-  $scope.book = {
-    title: 'AngularJS',
-    subtitle: 'Eine Einführung in das JS-Framework',
-    author: 'pt, rb',
-    isbn: '123-456-789',
-    numPages: 360
-  };
+  var isbn = $routeParams.isbn;
+
+  bookDataService.getBookByIsbn(isbn).then(function(response) {
+    $scope.book = response.data;
+  }).catch(function(error) {
+    console.log('An error occurred!', error);
+  });
 
 });
