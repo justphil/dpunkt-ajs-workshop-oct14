@@ -1,0 +1,13 @@
+<h1>New Book</h1>
+
+<form name="bookForm" novalidate>
+
+    <input type="text" name="title" ng-model="book.title" placeholder="title" required><br>
+    <input type="text" name="subtitle" ng-model="book.subtitle" placeholder="subtitle" required><br>
+    <input type="text" name="isbn" ng-model="book.isbn" placeholder="isbn" required><br>
+    <input type="text" name="author" ng-model="book.author" placeholder="author" required><br>
+    <input type="number" name="numPages" ng-model="book.numPages" placeholder="numPages" required><br>
+
+    <button ng-click="saveBook(book)">Save Book</button>
+
+</form>
