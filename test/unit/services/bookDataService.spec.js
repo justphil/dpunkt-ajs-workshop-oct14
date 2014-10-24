@@ -4,10 +4,14 @@ describe('Service: bookDataService', function() {
 
   var bookDataService, $httpBackend;
 
-  var baseUrl = 'http://ajs-workshop.herokuapp.com/api';
+  var baseUrl = 'http://google.com/api';
   var isbn = '123-456-789';
 
   beforeEach(module('dpunktApp'));
+
+  beforeEach(module(function(bookDataServiceProvider) {
+    bookDataServiceProvider.setBaseUrl(baseUrl);
+  }));
 
   beforeEach(inject(function(_$httpBackend_, _bookDataService_) {
     $httpBackend = _$httpBackend_;
