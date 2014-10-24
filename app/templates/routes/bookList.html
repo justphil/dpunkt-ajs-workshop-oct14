@@ -1,1 +1,8 @@
 <book-list></book-list>
+
+<message-dialog visible="dialogVisible"
+                title="dialogTitle"
+                on-yes="performDeletion()"
+                on-no="cancelDeletion()">
+    Wollen Sie das Buch <b>{{ bookToDelete.title }}</b> wirklich löschen?
+</message-dialog>
