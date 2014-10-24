@@ -1,5 +1,9 @@
 angular.module('dpunktApp').controller('bookListCtrl', function($scope, bookDataService) {
 
+
+  $scope.dateTime = new Date();
+
+
   function loadBookList() {
     bookDataService.getBooks().then(function(response) {
       $scope.books = response.data;
