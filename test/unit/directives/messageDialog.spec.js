@@ -40,8 +40,15 @@ describe('Directive: messageDialog', function() {
 
   it('should get an isolated scope', function() {
     var parentScope = $rootScope.$new();
+    parentScope.test = 'foo';
+
     var element = $compile(template)(parentScope);
     parentScope.$apply();
+
+    var directiveScope = getDirectiveScope(element);
+
+    expect(parentScope.test).toBeDefined();
+    expect(directiveScope.test).toBeUndefined();
   });
 
   function getDirectiveScope(element) {
