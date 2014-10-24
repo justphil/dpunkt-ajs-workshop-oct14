@@ -1,4 +1,4 @@
-angular.module('dpunktApp').factory('bookDataService', function($q) {
+angular.module('dpunktApp').factory('bookDataService', function($q, dataEnhancer) {
 
   var books = [
     {
@@ -26,8 +26,14 @@ angular.module('dpunktApp').factory('bookDataService', function($q) {
 
   // private implementation
   function getBooks() {
+    var booksCopy = angular.copy(books);
+
+    booksCopy.forEach(function(b) {
+      dataEnhancer.enhance(b);
+    });
+
     return $q.when({
-      data: angular.copy(books)
+      data: booksCopy
     });
   }
 
@@ -40,6 +46,7 @@ angular.module('dpunktApp').factory('bookDataService', function($q) {
 
     if (tmpArray.length > 0) {
       book = angular.copy(tmpArray[0]);
+      dataEnhancer.enhance(book);
     }
 
     return $q.when({

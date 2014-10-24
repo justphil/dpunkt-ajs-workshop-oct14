@@ -6,6 +6,18 @@ describe('Service: bookDataService', function() {
 
   beforeEach(module('dpunktApp'));
 
+  beforeEach(module(function($provide) {
+    $provide.factory('dataEnhancer', function() {
+      function enhance(book) {
+        book.test = 'test';
+      }
+
+      return {
+        enhance: enhance
+      }
+    });
+  }));
+
   beforeEach(inject(function(_$rootScope_, _bookDataService_) {
     $rootScope = _$rootScope_;
     bookDataService = _bookDataService_;
@@ -123,6 +135,8 @@ describe('Service: bookDataService', function() {
 
   function isBookObject(book) {
     return angular.isDefined(book)
+                    && book.hasOwnProperty('test')
+                    && book.test === 'test'
                     && book.hasOwnProperty('title')
                     && book.hasOwnProperty('subtitle')
                     && book.hasOwnProperty('isbn')
