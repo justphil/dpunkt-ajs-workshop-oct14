@@ -6,4 +6,9 @@ angular.module('dpunktApp').controller('bookListCtrl', function($scope, bookData
     console.log('An error occurred!', error);
   });
 
+
+  $scope.deleteBook = function(book) {
+    console.log('Deleting book...', book);
+  };
+
 });

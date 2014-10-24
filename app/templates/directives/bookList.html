@@ -8,6 +8,7 @@
         <th>Title</th>
         <th>Subtitle</th>
         <th>ISBN</th>
+        <th>Löschen</th>
     </tr>
     </thead>
 
@@ -16,6 +17,7 @@
         <td><a ng-href="#/books/{{ book.isbn }}" ng-bind="book.title"></a></td>
         <td ng-bind="book.subtitle"></td>
         <td ng-bind="book.isbn"></td>
+        <td><button ng-click="deleteBook(book)">Löschen</button></td>
     </tr>
     </tbody>
 </table>
