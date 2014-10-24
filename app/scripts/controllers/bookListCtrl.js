@@ -1,7 +1,12 @@
-angular.module('dpunktApp').controller('bookListCtrl', function($scope, bookDataService) {
+angular.module('dpunktApp').controller('bookListCtrl', function($scope, $interval, bookDataService) {
+
+  $scope.dateTime = 'Loading...';
+
+  $interval(function() {
+    $scope.dateTime = new Date();
+  }, 1000);
 
 
-  $scope.dateTime = new Date();
 
 
   function loadBookList() {
