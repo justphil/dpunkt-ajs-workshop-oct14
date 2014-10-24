@@ -2,26 +2,28 @@
 
 describe('Service: bookDataService', function() {
 
-  var bookDataService, $rootScope;
+  var bookDataService, $rootScope, $httpBackend;
+
+  var baseUrl = 'http://ajs-workshop.herokuapp.com/api';
+  var isbn = '123-456-789';
 
   beforeEach(module('dpunktApp'));
 
-  beforeEach(module(function($provide) {
-    $provide.factory('dataEnhancer', function() {
-      function enhance(book) {
-        book.test = 'test';
-      }
-
-      return {
-        enhance: enhance
-      }
-    });
-  }));
-
-  beforeEach(inject(function(_$rootScope_, _bookDataService_) {
-    $rootScope = _$rootScope_;
+  beforeEach(inject(function(_$httpBackend_, _bookDataService_) {
+    $httpBackend = _$httpBackend_;
     bookDataService = _bookDataService_;
   }));
+
+  beforeEach(function() {
+    $httpBackend.when('GET', baseUrl + '/books').respond({});
+    $httpBackend.when('GET', baseUrl + '/books/' + isbn).respond({});
+  });
+
+  // ensure that there are no outstanding expectation and requests
+  afterEach(function() {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
 
 
   describe('Duck Typing', function() {
@@ -43,42 +45,18 @@ describe('Service: bookDataService', function() {
   });
 
   describe('getBooks()', function() {
-    var books;
-
-    beforeEach(function() {
-      bookDataService.getBooks().then(function(response) {
-        books = response.data;
-      });
-
-      // synchronous resolution of pending promises
-      $rootScope.$apply();
-    });
-
-    it('should return an array', function() {
-      expect(angular.isArray(books)).toBe(true);
-    });
-
-    it('should return an array of book objects', function() {
-      books.forEach(function(b) {
-        expect(isBookObject(b)).toBe(true);
-      });
+    it('should perform the corresponding GET request', function() {
+      $httpBackend.expectGET(baseUrl + '/books');
+      bookDataService.getBooks();
+      $httpBackend.flush();
     });
   });
 
   describe('getBookByIsbn(isbn)', function() {
     it('should return an appropriate book object by isbn', function() {
-      var book;
-      var isbn = '123-456-789';
-
-      bookDataService.getBookByIsbn(isbn).then(function(response) {
-        book = response.data;
-      });
-
-      // synchronous resolution of pending promises
-      $rootScope.$apply();
-
-      expect(isBookObject(book)).toBe(true);
-      expect(book.isbn).toBe(isbn);
+      $httpBackend.expectGET(baseUrl + '/books/' + isbn);
+      bookDataService.getBookByIsbn(isbn);
+      $httpBackend.flush();
     });
   });
 

@@ -1,4 +1,4 @@
-angular.module('dpunktApp').factory('bookDataService', function($q, $http) {
+angular.module('dpunktApp').factory('bookDataService', function($http) {
 
   var baseUrl = 'http://ajs-workshop.herokuapp.com/api';
 
@@ -8,45 +8,15 @@ angular.module('dpunktApp').factory('bookDataService', function($q, $http) {
   }
 
   function getBookByIsbn(isbn) {
-    var book = null;
-
-    var tmpArray = books.filter(function(b) {
-      return isbn === b.isbn;
-    });
-
-    if (tmpArray.length > 0) {
-      book = angular.copy(tmpArray[0]);
-      dataEnhancer.enhance(book);
-    }
-
-    return $q.when({
-      data: book
-    });
+    return $http.get(baseUrl + '/books/' + isbn);
   }
 
   function saveBook(book) {
-    books.push(book);
-
-    return $q.when({
-      data: true
-    });
+    return $http.post(baseUrl + '/books', book);
   }
 
   function deleteBookByIsbn(isbn) {
-    var deleted = false;
-
-    var i = books.length;
-    while (i--) {
-      if (books[i].isbn === isbn) {
-        books.splice(i, 1);
-        deleted = true;
-        break;
-      }
-    }
-
-    return $q.when({
-      data: deleted
-    });
+    return $http.delete(baseUrl + '/books/' + isbn);
   }
 
   // revealing module
