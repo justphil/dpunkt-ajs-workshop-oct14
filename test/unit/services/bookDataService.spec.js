@@ -2,7 +2,7 @@
 
 describe('Service: bookDataService', function() {
 
-  var bookDataService, $rootScope, $httpBackend;
+  var bookDataService, $httpBackend;
 
   var baseUrl = 'http://ajs-workshop.herokuapp.com/api';
   var isbn = '123-456-789';
@@ -17,6 +17,8 @@ describe('Service: bookDataService', function() {
   beforeEach(function() {
     $httpBackend.when('GET', baseUrl + '/books').respond({});
     $httpBackend.when('GET', baseUrl + '/books/' + isbn).respond({});
+    $httpBackend.when('POST', baseUrl + '/books').respond({});
+    $httpBackend.when('DELETE', baseUrl + '/books/' + isbn).respond({});
   });
 
   // ensure that there are no outstanding expectation and requests
@@ -66,83 +68,17 @@ describe('Service: bookDataService', function() {
         isbn: 'test'
       };
 
-      var bookSaved = false;
-
-      bookDataService.saveBook(bookToStore).then(function(response) {
-        bookSaved = response.data;
-      });
-
-      $rootScope.$apply();
-
-      var book;
-      bookDataService.getBookByIsbn(bookToStore.isbn).then(function(response) {
-        book = response.data;
-      });
-
-      $rootScope.$apply();
-
-      expect(bookSaved).toBe(true);
-      expect(book.isbn).toBe(bookToStore.isbn);
+      $httpBackend.expectPOST(baseUrl + '/books', bookToStore);
+      bookDataService.saveBook(bookToStore);
+      $httpBackend.flush();
     });
   });
 
   describe('deleteBookByIsbn(isbn)', function() {
     it('should properly delete the book with the passed isbn', function() {
-      var isbnToDelete = '123-456-789';
-      var bookAvailable, bookCountBefore, bookCountAfter, bookDeleted;
-
-      bookAvailable = isBookAvailable(isbnToDelete);
-      expect(bookAvailable).toBe(true);
-
-      bookCountBefore = getBookCount();
-
-      bookDataService.deleteBookByIsbn(isbnToDelete).then(function(response) {
-        bookDeleted = response.data;
-      });
-      $rootScope.$apply();
-
-      bookAvailable = isBookAvailable(isbnToDelete);
-      expect(bookAvailable).toBe(false);
-
-      bookCountAfter = getBookCount();
-
-      expect(bookDeleted).toBe(true);
-      expect(bookCountAfter).toBe(bookCountBefore - 1);
+      $httpBackend.expectDELETE(baseUrl + '/books/' + isbn);
+      bookDataService.deleteBookByIsbn(isbn);
+      $httpBackend.flush();
     });
   });
-
-  function isBookObject(book) {
-    return angular.isDefined(book)
-                    && book.hasOwnProperty('test')
-                    && book.test === 'test'
-                    && book.hasOwnProperty('title')
-                    && book.hasOwnProperty('subtitle')
-                    && book.hasOwnProperty('isbn')
-                    && book.hasOwnProperty('author')
-                    && book.hasOwnProperty('numPages');
-  }
-
-  function getBookCount() {
-    var bookCount;
-
-    bookDataService.getBooks().then(function(response) {
-      bookCount = response.data.length;
-    });
-    $rootScope.$apply();
-
-    return bookCount;
-  }
-
-  function isBookAvailable(isbn) {
-    var bookAvailable = false;
-
-    bookDataService.getBookByIsbn(isbn).then(function(response) {
-      if (response.data) {
-        bookAvailable = true;
-      }
-    });
-    $rootScope.$apply();
-
-    return bookAvailable;
-  }
 });
