@@ -15,7 +15,7 @@
     <tbody>
     <tr ng-repeat="book in books | orderBy:'title':true | filter:{title: searchText}">
         <td><a ng-href="#/books/{{ book.isbn }}" ng-bind="book.title"></a></td>
-        <td ng-bind="book.subtitle"></td>
+        <td ng-bind="book.subtitle | truncate:35"></td>
         <td ng-bind="book.isbn"></td>
         <td><button ng-click="deleteBook(book)">Löschen</button></td>
     </tr>
