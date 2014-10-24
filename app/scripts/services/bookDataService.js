@@ -47,10 +47,19 @@ angular.module('dpunktApp').factory('bookDataService', function($q) {
     });
   }
 
+  function saveBook(book) {
+    books.push(book);
+
+    return $q.when({
+      data: true
+    });
+  }
+
   // revealing module
   return {
     getBooks: getBooks,
-    getBookByIsbn: getBookByIsbn
+    getBookByIsbn: getBookByIsbn,
+    saveBook: saveBook
   };
 
 });
