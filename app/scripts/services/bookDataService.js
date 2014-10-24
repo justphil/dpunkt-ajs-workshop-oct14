@@ -55,11 +55,29 @@ angular.module('dpunktApp').factory('bookDataService', function($q) {
     });
   }
 
+  function deleteBookByIsbn(isbn) {
+    var deleted = false;
+
+    var i = books.length;
+    while (i--) {
+      if (books[i].isbn === isbn) {
+        books.splice(i, 1);
+        deleted = true;
+        break;
+      }
+    }
+
+    return $q.when({
+      data: deleted
+    });
+  }
+
   // revealing module
   return {
     getBooks: getBooks,
     getBookByIsbn: getBookByIsbn,
-    saveBook: saveBook
+    saveBook: saveBook,
+    deleteBookByIsbn: deleteBookByIsbn
   };
 
 });
